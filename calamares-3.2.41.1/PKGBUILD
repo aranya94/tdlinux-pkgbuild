@@ -1,14 +1,14 @@
 # Maintainer: Philip Müller <philm[at]manjaro[dog]org>
 
 pkgname=calamares
-pkgver=3.2.40
-_pkgver=3.2.40
+pkgver=3.2.41.1
+_pkgver=1
 pkgrel=1
-_commit=
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
+#https://github.com/calamares/calamares/releases/download/v3.2.41.1/calamares-3.2.41.1.tar.gz
 license=(GPL)
-url="https://gitlab.manjaro.org/applications/calamares"
+url="https://github.com/calamares/calamares/releases/download"
 license=('LGPL')
 depends=('kconfig' 'kcoreaddons' 'kiconthemes' 'ki18n' 'kio' 'solid' 'yaml-cpp' 'kpmcore>=4.2.0' 'mkinitcpio-openswap'
          'boost-libs' 'ckbcomp' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gtk-update-icon-cache' 'plasma-framework'
@@ -19,14 +19,15 @@ backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/initcpio.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
-source+=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/-/archive/v$pkgver/calamares-v$pkgver.tar.gz"
-         #"$pkgname-$pkgver-$pkgrel.tar.gz::$url/-/archive/$_commit/$pkgname-$_commit.tar.gz"
-        )
-sha256sums=('44d1f2f5743d8c89bdf0c38eb8d5a379915ccc654e235c92c89f3b7d50344fd4')
+source+=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/v$pkgver/calamares-$pkgver.tar.gz")
+sha256sums=('c963c6e6ed9893d9ec1008ecf471747193627fadee16b76491df6b653c8e4663')
+
+#https://github.com/calamares/calamares/releases/download/v3.2.41.1/calamares-3.2.41.1.tar.gz
+#https://github.com/calamares/calamares/releases/download/v3.2.41/calamares-3.2.41.tar.gz
 
 prepare() {
-	#mv ${srcdir}/calamares-${_commit} ${srcdir}/calamares-${pkgver}
-	mv ${srcdir}/calamares-v${pkgver} ${srcdir}/calamares-${pkgver}
+	
+	#mv ${srcdir}/calamares-v${pkgver} ${srcdir}/calamares-v${pkgver}
 	cd ${srcdir}/calamares-${pkgver}
 	sed -i -e 's/"Install configuration files" OFF/"Install configuration files" ON/' CMakeLists.txt
 
@@ -40,8 +41,7 @@ prepare() {
 	sed -i -e "s|\${CALAMARES_VERSION_MAJOR}.\${CALAMARES_VERSION_MINOR}.\${CALAMARES_VERSION_PATCH}|${_ver}-${pkgrel}|g" CMakeLists.txt
 	sed -i -e "s|CALAMARES_VERSION_RC 1|CALAMARES_VERSION_RC 0|g" CMakeLists.txt
 
-	# change branding
-	sed -i -e "s/default/manjaro/g" src/branding/CMakeLists.txt
+
 }
 
 build() {
