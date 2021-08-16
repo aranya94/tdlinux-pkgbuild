@@ -2,11 +2,9 @@
 
 pkgname=calamares
 pkgver=3.2.41.1
-_pkgver=1
 pkgrel=1
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
-#https://github.com/calamares/calamares/releases/download/v3.2.41.1/calamares-3.2.41.1.tar.gz
 license=(GPL)
 url="https://github.com/calamares/calamares/releases/download"
 license=('LGPL')
@@ -22,25 +20,17 @@ backup=('usr/share/calamares/modules/bootloader.conf'
 source+=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/v$pkgver/calamares-$pkgver.tar.gz")
 sha256sums=('c963c6e6ed9893d9ec1008ecf471747193627fadee16b76491df6b653c8e4663')
 
-#https://github.com/calamares/calamares/releases/download/v3.2.41.1/calamares-3.2.41.1.tar.gz
-#https://github.com/calamares/calamares/releases/download/v3.2.41/calamares-3.2.41.tar.gz
-
 prepare() {
-	
-	#mv ${srcdir}/calamares-v${pkgver} ${srcdir}/calamares-v${pkgver}
 	cd ${srcdir}/calamares-${pkgver}
 	sed -i -e 's/"Install configuration files" OFF/"Install configuration files" ON/' CMakeLists.txt
 
 	# patches here
 
 	# change version
-	sed -i -e "s|$pkgver|$_pkgver|g" CMakeLists.txt
-	#_ver="$(cat CMakeLists.txt | grep -m3 -e "  VERSION" | grep -o "[[:digit:]]*" | xargs | sed s'/ /./g')"
-	_ver="$pkgver"
+	_ver="$(cat CMakeLists.txt | grep -m3 -e "  VERSION" | grep -o "[[:digit:]]*" | xargs | sed s'/ /./g')"
 	printf 'Version: %s-%s' "${_ver}" "${pkgrel}"
 	sed -i -e "s|\${CALAMARES_VERSION_MAJOR}.\${CALAMARES_VERSION_MINOR}.\${CALAMARES_VERSION_PATCH}|${_ver}-${pkgrel}|g" CMakeLists.txt
 	sed -i -e "s|CALAMARES_VERSION_RC 1|CALAMARES_VERSION_RC 0|g" CMakeLists.txt
-
 
 }
 
@@ -53,29 +43,28 @@ build() {
               -DCMAKE_BUILD_TYPE=Release \
               -DCMAKE_INSTALL_PREFIX=/usr \
               -DCMAKE_INSTALL_LIBDIR=lib \
-              -DWITH_KF5DBus=OFF \
+              -DWITH_PYTHONQT:BOOL=ON \
               -DBoost_NO_BOOST_CMAKE=ON \
-              -DSKIP_MODULES="tracking interactiveterminal initramfs \
+              -DSKIP_MODULES="tracking webview interactiveterminal initramfs \
                               initramfscfg dracut dracutlukscfg \
                               dummyprocess dummypython dummycpp \
-                              dummypythonqt services-openrc \
-                              keyboardq localeq welcomeq"
+                              dummypythonqt services-openrc"
         make
 }
 
 package() {
 	cd ${srcdir}/calamares-${pkgver}/build
 	make DESTDIR="$pkgdir" install
-	install -Dm644 "../data/manjaro-icon.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/calamares.svg"
-	install -Dm644 "../data/calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
-	install -Dm755 "../data/calamares_polkit" "$pkgdir/usr/bin/calamares_polkit"
-	install -Dm644 "../data/49-nopasswd-calamares.rules" "$pkgdir/etc/polkit-1/rules.d/49-nopasswd-calamares.rules"
-	chmod 750      "$pkgdir"/etc/polkit-1/rules.d
+	#install -Dm644 "../data/manjaro-icon.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/calamares.svg"
+	#install -Dm644 "../data/calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
+	#install -Dm755 "../data/calamares_polkit" "$pkgdir/usr/bin/calamares_polkit"
+	#install -Dm644 "../data/49-nopasswd-calamares.rules" "$pkgdir/etc/polkit-1/rules.d/49-nopasswd-calamares.rules"
+	#chmod 750      "$pkgdir"/etc/polkit-1/rules.d
 
 	# rename services-systemd back to services
-	mv "$pkgdir/usr/lib/calamares/modules/services-systemd" "$pkgdir/usr/lib/calamares/modules/services"
-	mv "$pkgdir/usr/share/calamares/modules/services-systemd.conf" "$pkgdir/usr/share/calamares/modules/services.conf"
-	sed -i -e 's/-systemd//' "$pkgdir/usr/lib/calamares/modules/services/module.desc"
-	sed -i -e 's/-systemd//' "$pkgdir/usr/share/calamares/settings.conf"
+	#mv "$pkgdir/usr/lib/calamares/modules/services-systemd" "$pkgdir/usr/lib/calamares/modules/services"
+	#mv "$pkgdir/usr/share/calamares/modules/services-systemd.conf" "$pkgdir/usr/share/calamares/modules/services.conf"
+	#sed -i -e 's/-systemd//' "$pkgdir/usr/lib/calamares/modules/services/module.desc"
+	#sed -i -e 's/-systemd//' "$pkgdir/usr/share/calamares/settings.conf"
 }
 
