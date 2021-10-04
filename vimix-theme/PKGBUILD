@@ -8,17 +8,17 @@ destinationdir1="/usr/share/grub/themes/Vimix"
 destinationdir2="/boot/grub/themes/Vimix"
 #_licensedir="/usr/share/tdlinux/licenses/"
 pkgver=20200927
-pkgrel=1
+pkgrel=2
 pkgdesc="vimix grub theme"
 arch=(any)
-url="https://github.com/erikduboi s/grub2-themes"
+url="https://github.com/erikdubois/grub2-themes"
 license=('GPL3')
 depends=(grub)
 #optdepends=('grub-customizer')
 makedepends=('git')
-install=${pkgname}.install
+#install=${pkgname}.install
 conflicts=('tdlinux-grub-theme-vimix-git')
-source=("$pkgname::git+https://github.com/erikdubois/grub2-themes.git")
+source=("$pkgname::git+https://github.com/aranya94/grub2-themes.git")
 md5sums=('SKIP')
 package() {
     #install -d "$pkgdir/${destinationdir1}"
@@ -39,4 +39,5 @@ package() {
     mkdir -p ${pkgdir}/boot/grub/themes
     cp -r ${pkgdir}/$destinationdir1 ${pkgdir}/$destinationdir2
 }
+
 
