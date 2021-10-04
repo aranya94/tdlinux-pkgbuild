@@ -2,7 +2,7 @@
 
 pkgname=tdlinux-kde-settings
 pkgver=20211004
-pkgrel=3
+pkgrel=4
 _branch='master'
 pkgdesc="TDLinux KDE settings"
 arch=('any')
