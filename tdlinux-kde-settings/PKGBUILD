@@ -1,0 +1,38 @@
+# Maintainer: Aranya Das <iamaranya@hotmail.com>
+
+pkgname=tdlinux-kde-settings
+pkgver=20211004
+pkgrel=1
+_branch='master'
+pkgdesc="TDLinux KDE settings"
+arch=('any')
+url="https://github.com/aranya94/$pkgname"
+license=('GPL')
+makedepends=('git')
+depends=('candy-icons')
+source=("git+$url.git")
+md5sums=('SKIP')
+
+pkgver() {
+  date +%Y%m%d
+}
+
+package_tdlinux-kde-settings() {
+  pkgdesc="TDLinux KDE settings"
+
+  cp -r $pkgname/etc $pkgdir/etc
+  #cp -r $pkgname/usr $pkgdir/usr
+
+  # show wallpapers from other pkgs in Plasma Desktop Settings
+  #mkdir -p $pkgdir/usr/share/wallpapers
+  #ln -s ../backgrounds $pkgdir/usr/share/wallpapers/Manjaro
+}
+
+#package_tdlinux-kde-minimal-setting() {
+  #pkgdesc="TDLinux KDE minimal settings"
+
+ # cp -r $pkgname/etc $pkgdir/etc
+ # cp -r $pkgname/usr $pkgdir/usr
+#  cp -f $pkgname/minimal/plasma-org.kde.plasma.desktop-appletsrc $pkgdir/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
+#}
+
