@@ -1,13 +1,13 @@
 pkgname=neofetch
 pkgver=7.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A CLI system information tool written in BASH that supports displaying images."
 arch=('x86_64')
 url="https://github.com/aranya94/${pkgname}"
 license=('MIT')
 depends=('bash')
 source=("https://github.com/aranya94/${pkgname}/releases/download/Neofetch-7.1.0/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f9dc1f082202df3a033d7d64afd50437')
+md5sums=('d1dda2de0cbb71576c5611fc6e88fa45')
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}/"
