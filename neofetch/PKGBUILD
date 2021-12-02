@@ -1,0 +1,16 @@
+pkgname=neofetch
+pkgver=7.1.0
+pkgrel=1
+pkgdesc="A CLI system information tool written in BASH that supports displaying images."
+arch=('x86_64')
+url="https://github.com/aranya94/${pkgname}"
+license=('MIT')
+depends=('bash')
+source=("https://github.com/aranya94/${pkgname}/releases/download/Neofetch-7.1.0/${pkgname}-${pkgver}.tar.gz")
+md5sums=('5b8d6b0dfe323a466d1fda9cad4be350')
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}/"
+  make DESTDIR="$pkgdir" install
+  install -D -m644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.md"
+}
