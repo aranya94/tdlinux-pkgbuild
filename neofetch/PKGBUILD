@@ -7,7 +7,7 @@ url="https://github.com/aranya94/${pkgname}"
 license=('MIT')
 depends=('bash')
 source=("https://github.com/aranya94/${pkgname}/releases/download/Neofetch-7.1.0/${pkgname}-${pkgver}.tar.gz")
-md5sums=('5b8d6b0dfe323a466d1fda9cad4be350')
+md5sums=('f9dc1f082202df3a033d7d64afd50437')
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}/"
